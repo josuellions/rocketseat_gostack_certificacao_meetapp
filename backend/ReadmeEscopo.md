@@ -59,8 +59,12 @@ Crie uma rota para upload de arquivos que cadastra em uma tabela o caminho e nom
 |-> Validação cadastrar meetups por data.
 |-> validação data -> date-fns
 
-|-> O usuário também deve poder editar todos dados de meetups que ainda não aconteceram e que ele é organizador.
-
 |-> Crie uma rota para listar os meetups que são organizados pelo usuário logado.
+|-> EventsmeetupsController -> enventos do usuario de cadastro
+|-> paginação da lista
+
+|-> ScheduleEventsController -> todos os agendamentos de eventos cadastrados
+
+|-> O usuário também deve poder editar todos dados de meetups que ainda não aconteceram e que ele é organizador.
 
 |-> O usuário deve poder cancelar meetups organizados por ele e que ainda não aconteceram. O cancelamento deve deletar o meetup da base ||-> de dados.

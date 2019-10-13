@@ -1,8 +1,46 @@
 import * as Yup from 'yup';
 import { startOfHour, parseISO, isBefore } from 'date-fns';
 import Eventsmeetups from '../models/Eventsmeetups';
+import User from '../models/User';
+import File from '../models/File';
 
 class EventsmeetupsController {
+  /* List Envents */
+
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const events = await Eventsmeetups.findAll({
+      where: { user_id: req.userId, canceled_at: null },
+      order: ['date'],
+      limit: 10,
+      offset: (page - 1) * 10,
+      attributes: [
+        'title',
+        'description',
+        'locate',
+        'date',
+        'user_id',
+        'file_id',
+      ],
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name', 'email'],
+        },
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
+
+    return res.json(events);
+  }
+
+  // Create Events
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
@@ -46,7 +84,31 @@ class EventsmeetupsController {
       date: dateEnvent,
     });
 
-    return res.json(event);
+    const response = await Eventsmeetups.findAll({
+      where: { id: event.id },
+      attributes: [
+        'title',
+        'description',
+        'locate',
+        'date',
+        'user_id',
+        'file_id',
+      ],
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name', 'email'],
+        },
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['name', 'path', 'url'],
+        },
+      ],
+    });
+
+    return res.json(response);
   }
 }
 
