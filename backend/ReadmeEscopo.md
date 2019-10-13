@@ -57,6 +57,8 @@ O usuário pode cadastrar meetups na plataforma com título do meetup, descriç�
 
 Não deve ser possível cadastrar meetups com datas que já passaram.
 
+|-> validação data -> date-fns
+
 O usuário também deve poder editar todos dados de meetups que ainda não aconteceram e que ele é organizador.
 
 Crie uma rota para listar os meetups que são organizados pelo usuário logado.
