@@ -53,10 +53,10 @@ Crie uma rota para upload de arquivos que cadastra em uma tabela o caminho e nom
 
 ### Gerenciamento de meetups
 
-O usuário pode cadastrar meetups na plataforma com título do meetup, descrição, localização, data e hora e imagem (banner). Todos campos são obrigatórios. Adicione também um campo user_id que armazena o ID do usuário que organiza o evento.
+|-> cadastrar meetups
+|-> Campos -> título, descrição, localização, data e hora e imagem (banner), user_id.
 
-Não deve ser possível cadastrar meetups com datas que já passaram.
-
+|-> Validação cadastrar meetups por data.
 |-> validação data -> date-fns
 
 O usuário também deve poder editar todos dados de meetups que ainda não aconteceram e que ele é organizador.
