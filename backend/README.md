@@ -13,10 +13,11 @@
 |-> src/app.js
 ||-> middlewares / routes
 
-### Server aplicação
+### Server aplicaçãogit checkout -b
 
-|-> src/server.js
-||-> Definindo porta de acesso server aplicação
+git checkout -b
+|-> src/server.jsgit checkout -b
+||-> Definindo porta de acesso server aplicaçãogit checkout -b
 
 ### Routes acesso da aplicação
 
