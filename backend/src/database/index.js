@@ -1,16 +1,19 @@
 import Sequelize from 'sequelize';
-
-import databaseConfig from '../config/database';
+import mongoose from 'mongoose';
 
 import User from '../app/models/User';
 import File from '../app/models/File';
 import Eventsmeetups from '../app/models/Eventsmeetups';
+import Subscriptionmeetups from '../app/models/Subscriptionmeetups';
 
-const models = [User, File, Eventsmeetups];
+import databaseConfig from '../config/database';
+
+const models = [User, File, Eventsmeetups, Subscriptionmeetups];
 
 class Database {
   constructor() {
     this.init();
+    this.mongo();
   }
 
   init() {
@@ -19,6 +22,16 @@ class Database {
     models
       .map(model => model.init(this.connection))
       .map(model => model.associate && model.associate(this.connection.models));
+  }
+
+  mongo() {
+    if (process.env.NODE_ENV === 'production') {
+      this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useFindAndModify: true,
+        useUnifiedTopology: true,
+      });
+    }
   }
 }
 

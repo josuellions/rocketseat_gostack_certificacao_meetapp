@@ -10,6 +10,10 @@ class ScheduleEventsController {
     const { page = 1, date } = req.query;
     const parseDate = parseISO(date);
 
+    if (!date) {
+      return res.status(400).json({ error: 'Invalid date!' });
+    }
+
     const events = await Eventsmeetups.findAll({
       where: {
         canceled_at: null,
@@ -21,10 +25,12 @@ class ScheduleEventsController {
       limit: 10,
       offset: (page - 1) * 10,
       attributes: [
+        'id',
         'title',
         'description',
         'locate',
         'date',
+        'past',
         'user_id',
         'file_id',
       ],

@@ -37,3 +37,14 @@ git checkout -b
 **_ Teste _**
 |-> APP_SECRET=templatenoderocketseat
 |-> DB_DIALECT=sqlite
+
+### Notificações para Organizador do meetup
+
+|-> Utilizando **_ Mailtrap(DEV)_**
+|-> Templeta email -> express-handlebars / nodemailer-express-handlebars
+|-> Performace no envio de notificações por email -> redis:alpine / bee-queue (controle de filas)
+
+### Tratamento de Erros e Exceções
+
+|-> @sentry/node@5.7.1 / express-async-errors
+|-> visualização tratamento erros e exceções -> Youch
