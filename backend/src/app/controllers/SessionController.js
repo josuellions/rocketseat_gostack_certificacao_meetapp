@@ -26,6 +26,7 @@ class SessionController {
     if (!(await user.checkPassword(password))) {
       return res.status(401).json({ error: 'Password does not match!' });
     }
+
     const { id, name } = user;
     return res.json({
       user: {
