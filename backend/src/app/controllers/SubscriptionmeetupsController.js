@@ -18,7 +18,7 @@ import Queue from '../../lib/Queue';
 
 class SubscriptionmeetupsController {
   async index(req, res) {
-    const { page = 1 } = req.query;
+    // const { page = 1 } = req.query;
 
     const checkIsSubscription = await Subscriptionmeetups.findAll({
       where: {
@@ -26,8 +26,8 @@ class SubscriptionmeetupsController {
         canceled_at: null,
       },
       order: [['createdAt', 'desc']],
-      limit: 10,
-      offset: (page - 1) * 10,
+      // limit: 10,
+      // offset: (page - 1) * 10,
       include: [
         {
           model: User,
@@ -100,7 +100,7 @@ class SubscriptionmeetupsController {
     }
 
     const checksubscriptions = await Subscriptionmeetups.findOne({
-      where: { id: _eventId, user_id: userId },
+      where: { event_id: _eventId, user_id: userId, canceled_at: null },
     });
 
     if (checksubscriptions) {

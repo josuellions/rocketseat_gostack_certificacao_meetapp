@@ -1,5 +1,15 @@
 import * as Yup from 'yup';
-import { startOfHour, parseISO, isBefore, subHours } from 'date-fns';
+import {
+  startOfHour,
+  startOfDay,
+  endOfDay,
+  parseISO,
+  isBefore,
+  subHours,
+  format,
+} from 'date-fns';
+import pt from 'date-fns/locale/pt';
+import { Op } from 'sequelize';
 import Eventsmeetups from '../models/Eventsmeetups';
 import User from '../models/User';
 import File from '../models/File';
@@ -8,11 +18,26 @@ class EventsmeetupsController {
   /* List Envents */
 
   async index(req, res) {
-    const { page = 1 } = req.query;
+    const { page = 1, date = new Date() } = req.query;
+    const parseDate = format(parseISO(date), 'yyyy-MM-dd', { locale: pt });
+
+    const dateDay = format(new Date(), 'yyyy-MM-dd', { locale: pt });
 
     const events = await Eventsmeetups.findAll({
-      where: { user_id: req.userId, canceled_at: null },
-      order: ['date'],
+      where: {
+        date: {
+          [Op.between]: [
+            startOfDay(parseISO(parseDate)),
+            endOfDay(parseISO(parseDate)),
+          ],
+          [Op.gte]: parseISO(dateDay),
+        },
+        canceled_at: null,
+        user_id: {
+          [Op.ne]: req.userId,
+        },
+      },
+      order: [['date', 'desc']],
       limit: 10,
       offset: (page - 1) * 10,
       attributes: [
@@ -21,6 +46,8 @@ class EventsmeetupsController {
         'description',
         'locate',
         'date',
+        'canceled_at',
+        'cancelable',
         'user_id',
         'file_id',
       ],
@@ -121,7 +148,7 @@ class EventsmeetupsController {
       locate: Yup.string(),
       date: Yup.date(),
     });
-
+    console.log('atualiza');
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails!' });
     }
@@ -174,6 +201,8 @@ class EventsmeetupsController {
         'description',
         'locate',
         'date',
+        'canceled_at',
+        'cancelable',
         'user_id',
         'file_id',
       ],
@@ -181,12 +210,12 @@ class EventsmeetupsController {
         {
           model: User,
           as: 'user',
-          attributes: ['name', 'email'],
+          attributes: ['id', 'name', 'email'],
         },
         {
           model: File,
           as: 'banner',
-          attributes: ['name', 'path', 'url'],
+          attributes: ['id', 'name', 'path', 'url'],
         },
       ],
     });

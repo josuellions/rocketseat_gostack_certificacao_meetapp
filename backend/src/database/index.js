@@ -25,7 +25,7 @@ class Database {
   }
 
   mongo() {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'development') {
       this.mongoConnection = mongoose.connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useFindAndModify: true,
