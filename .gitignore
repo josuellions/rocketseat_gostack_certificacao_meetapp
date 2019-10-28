@@ -1,6 +1,6 @@
 node_modules
 .env
-.env.test
+env.test
 
 ReadmeEscopo.md
 
@@ -8,4 +8,4 @@ tmp/*
 !tmp/.gitkeep
 
 dist
-__tests__
+
